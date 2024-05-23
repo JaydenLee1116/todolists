@@ -1,8 +1,5 @@
 import { useState } from 'react';
 
-import TodoLogo from '../../components/TodoLogo';
-import TodoInput from '../../components/TodoInput';
-
 function Home() {
   const [newTodo, setNewTodo] = useState('');
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
