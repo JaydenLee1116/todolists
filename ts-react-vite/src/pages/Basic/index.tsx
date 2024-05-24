@@ -1,12 +1,19 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+
+type Todo = {
+  text: string;
+  isDone: boolean;
+};
 
 function Basic() {
-  const [newTodo, setNewTodo] = useState('');
+  const [newTodo, setNewTodo] = useState<Todo>({ text: '', isDone: false });
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewTodo(e.target.value);
+    setNewTodo({
+      text: e.target.value,
+      isDone: false,
+    });
   };
-  const [todos, setTodos] = useState<string[]>([]);
+  const [todos, setTodos] = useState<Todo[]>([]);
   return (
     <div className="flex flex-col content-center">
       <header className="m-0 w-full text-center text-6xl font-bold leading-[80px] text-jayden-0">
@@ -14,12 +21,15 @@ function Basic() {
       </header>
       <main className="flex flex-col justify-center">
         <div className="flex justify-center">
-          <input className="border" value={newTodo} onChange={handleInputChange} />
+          <input className="border" value={newTodo.text} onChange={handleInputChange} />
           <button
-            className="rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700"
+            className="rounded bg-jayden-0 px-4 py-2 font-bold text-white hover:bg-yellow-700"
             onClick={() => {
               setTodos([...todos, newTodo]);
-              setNewTodo('');
+              setNewTodo({
+                text: '',
+                isDone: false,
+              });
             }}
           >
             Add Todo
@@ -30,7 +40,22 @@ function Basic() {
             {todos.map((todo, index) => (
               <div className="flex">
                 <li key={index}>
-                  <span>{todo}</span>
+                  <span className={todo.isDone ? 'line-through' : ''}>{todo.text}</span>
+                  <button
+                    className="rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700"
+                    onClick={() => {
+                      setTodos(
+                        todos.map((t, i) => {
+                          if (i === index) {
+                            return { ...t, isDone: !t.isDone };
+                          }
+                          return t;
+                        }),
+                      );
+                    }}
+                  >
+                    {todo.isDone ? 'Undo' : 'Done'}
+                  </button>
                   <button
                     className="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
                     onClick={() => {
