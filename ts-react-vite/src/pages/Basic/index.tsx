@@ -15,7 +15,7 @@ function Basic() {
   };
   const [todos, setTodos] = useState<Todo[]>([]);
   return (
-    <div className="flex flex-col content-center">
+    <div className="flex flex-col items-center">
       <header className="m-0 w-full text-center text-6xl font-bold leading-[80px] text-jayden-0">
         <h1>Todolist TS + React + Vite</h1>
       </header>
